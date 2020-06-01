@@ -26,7 +26,7 @@ Here is the charset used for Mario:
 ![Mario](https://github.com/Nauja/ue4-chest2d-sample/raw/master/Content/Mario/Textures/T_Mario.png)
 
 As you can see, the size of one frame is really small (16x32 pixels). If it were displayed as is
-in UE4, then all your physics would have to be configured with really small values and placing or moving
+in UE4, then all your physics would have to be configured with unrealistic values and placing or moving
 Actors in the editor would become complicated due to their small size.
 
 So, the first important point is to configure our sprites with a **pixels per unit** value of **0.5**, which effectively make them scaled by two:
