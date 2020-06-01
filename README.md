@@ -31,12 +31,12 @@ with this single command:
 ```cpp
 void ASampleGameMode::BeginPlay()
 {
-  Super::BeginPlay();
+    Super::BeginPlay();
 
-  // Allow to keep the true colors of sprites
-  APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-  check(Controller);
-  Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
+    // Allow to keep the true colors of sprites
+    APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+    check(Controller);
+    Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
 }
 ```
 
