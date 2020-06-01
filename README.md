@@ -12,7 +12,7 @@ being fully replicated over network.
 
 Features:
   * Pixel perfect camera/sprites
-  * True sprites colors
+  * True sprite colors
   * Custom **Interact** action (E)
   * C++ RPC to replicate **Interact** action
   * C++ interactable chest
@@ -21,7 +21,7 @@ Features:
 
 wip
 
-### True sprites colors
+### True sprite colors
 
 One common problem is to keep the colors of your sprites intact.
 By default, many post processing effects are enabled and are causing sprites
