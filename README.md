@@ -122,7 +122,7 @@ UFUNCTION(BlueprintNativeEvent)
 void Interact(class AActor* Other);
 ```
 
-When pressing the **Interact** button, it calls the **Interact** function on all interactable Actors overlapping our character:
+When pressing the **Interact** button, the **Interact** function is called on all interactable Actors overlapping our character:
 
 ```cpp
 void ASampleCharacter::Interact()
