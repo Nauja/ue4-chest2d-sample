@@ -59,7 +59,7 @@ Also, in **Project Settings > Engine > Rendering**, make sure to uncheck the **M
 
 ### RPC to replicate Interact action
 
-Pressing the **Interact** button client-size simply calls an RPC server-side to handle the action.
+Pressing the **Interact** button client-side simply calls an RPC server-side to handle the action.
 
 Here is the definition in **ASampleCharacter.h**:
 
