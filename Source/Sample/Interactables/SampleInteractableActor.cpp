@@ -4,6 +4,7 @@
 #include "SampleCharacter.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Net/UnrealNetwork.h"
 
 USampleInteractableConfig::USampleInteractableConfig()
 {}
@@ -11,6 +12,7 @@ USampleInteractableConfig::USampleInteractableConfig()
 ASampleInteractableActor::ASampleInteractableActor(const FObjectInitializer& ObjectInitializer)
     : Super(ObjectInitializer)
     , Config(nullptr)
+    , bIsEnabled(true)
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -19,6 +21,12 @@ ASampleInteractableActor::ASampleInteractableActor(const FObjectInitializer& Obj
 
     RootComponent = SceneComponent;
     bReplicates = true;
+}
+
+void ASampleInteractableActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(ASampleInteractableActor, bIsEnabled);
 }
 
 void ASampleInteractableActor::PostInitializeComponents()
@@ -41,26 +49,17 @@ void ASampleInteractableActor::PostEditChangeProperty(FPropertyChangedEvent& Pro
 }
 #endif
 
-void ASampleInteractableActor::Interact_Implementation(class AActor* Other)
-{
-    if (Config)
-    {
-        /** This will be called after x seconds */
-        GetWorldTimerManager().SetTimer(TimerHandle_Reset, this, &ASampleInteractableActor::Reset, Config->ResetTimer, false);
-    }
-}
-
 void ASampleInteractableActor::NotifyActorBeginOverlap(class AActor* Other)
 {
     Super::NotifyActorBeginOverlap(Other);
 
-    if (IsValid(Other) && !IsPendingKill())
+    if (IsValid(Other) && !IsPendingKill() && bIsEnabled)
     {
         if (OverlappingActors.Num() == 0)
         {
-            NotifyBeginOverlappingActors();
+            NotifyBeginInteractable();
         }
-        OverlappingActors.AddUnique(Other);
+        OverlappingActors.Add(Other);
     }
 }
 
@@ -68,19 +67,67 @@ void ASampleInteractableActor::NotifyActorEndOverlap(class AActor* Other)
 {
     Super::NotifyActorEndOverlap(Other);
 
-    if (IsValid(Other) && !IsPendingKill())
+    if (IsValid(Other) && !IsPendingKill() && bIsEnabled)
     {
         OverlappingActors.Remove(Other);
         if (OverlappingActors.Num() == 0)
         {
-            NotifyEndOverlappingActors();
+            NotifyEndInteractable();
         }
     }
 }
 
-void ASampleInteractableActor::Reset()
-{}
-
-void ASampleInteractableActor::Tick(float DeltaSeconds)
+void ASampleInteractableActor::NotifyBeginInteractable_Implementation()
 {
+    OnBeginInteractable.Broadcast();
+}
+
+void ASampleInteractableActor::NotifyEndInteractable_Implementation()
+{
+    OnEndInteractable.Broadcast();
+}
+
+void ASampleInteractableActor::Interact_Implementation(class AActor* Other)
+{
+    if (Config)
+    {
+        /** This will be called after x seconds */
+        GetWorldTimerManager().SetTimer(TimerHandle_Reset, this, &ASampleInteractableActor::Reset, Config->ResetTimer, false);
+    }
+
+    SetIsEnabled(false);
+}
+
+void ASampleInteractableActor::SetIsEnabled_Implementation(bool State)
+{
+    bIsEnabled = State;
+
+    // If re-enabled, check currently overlapping actors
+    if (bIsEnabled)
+    {
+        OverlappingActors.Empty();
+        GetOverlappingActors(OverlappingActors, TSubclassOf<ASampleCharacter>());
+        if (OverlappingActors.Num() == 0)
+        {
+            NotifyEndInteractable();
+        }
+        else
+        {
+            NotifyBeginInteractable();
+        }
+    }
+    else
+    {
+        NotifyEndInteractable();
+    }
+}
+
+void ASampleInteractableActor::OnRep_IsEnabled()
+{
+    SetIsEnabled(bIsEnabled);
+}
+
+void ASampleInteractableActor::Reset()
+{
+    SetIsEnabled(true);
 }

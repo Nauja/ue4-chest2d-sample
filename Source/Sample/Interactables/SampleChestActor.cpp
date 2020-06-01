@@ -104,5 +104,7 @@ void ASampleChestActor::SetOpened(bool bState)
 
 void ASampleChestActor::Reset()
 {
+    Super::Reset();
+
     SetOpened(false);
 }
