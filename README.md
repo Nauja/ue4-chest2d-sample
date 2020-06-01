@@ -5,7 +5,7 @@
 
 Sample of a 2D chest done with Paper2D.
 
-![Preview](http://cdn.jeremymorosi.com/ue4/ue4-chest2d-sample/chest.gif)
+![Preview](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/preview.gif)
 
 This project is an example of how to write an interactable chest in a Paper2D game, with the constraint of
 being fully replicated over network.
