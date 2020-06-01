@@ -104,7 +104,7 @@ void ASampleCharacter::Server_Interact_Implementation()
 
 Please note that this RPC has to be called from an Actor owned by the client for it to works.
 Per consequence it would not be possible to move it directly into the class of our
-interactable Actor. Missing this point can lead to hard times trying to figure out why
+interactable Actor. Missing this point can give you a hard time trying to figure out why
 the RPC is not called on server.
 
 ### Interactable chest
