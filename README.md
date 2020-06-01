@@ -108,7 +108,14 @@ the RPC is not called on server.
 
 ### Replicated interactable chest
 
-The visual state of our chest (closed or opened) is replicated by enabling the replication of `ASampleChestActor`'s components:
+The possible interaction with our chest is detected by **ASampleInteractableActor** using these two functions:
+
+```cpp
+void NotifyActorBeginOverlap(class AActor* Other) override;
+void NotifyActorEndOverlap(class AActor* Other) override;
+```
+
+The visual state of our chest (closed or opened) is replicated by enabling the replication of **ASampleChestActor**'s components:
 
 ```cpp
 ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer)
