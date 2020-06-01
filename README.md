@@ -14,7 +14,7 @@ Features:
   * Pixel perfect camera/sprites
   * True sprite colors
   * Custom **Interact** action (E)
-  * C++ RPC to replicate **Interact** action
+  * RPC to replicate **Interact** action
   * C++ interactable chest
 
 ### Pixel perfect sprites
@@ -57,7 +57,7 @@ Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
 
 Also, in **Project Settings > Engine > Rendering**, make sure to uncheck the **Mobile HDR** option and all post processing options such as **Bloom**, **Auto Exposure**, **Anti-Aliasing**, etc.
 
-### C++ RPC to replicate Interact action
+### RPC to replicate Interact action
 
 Pressing the **Interact** button client-size simply calls a RPC server-side to handle the action.
 
