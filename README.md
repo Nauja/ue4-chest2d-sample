@@ -34,6 +34,15 @@ by two:
 
 ![PixelsPerUnit](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/pixelperfect_sprite.png)
 
+The **OrthoWidth** parameter of the **SideViewCamera** is set to **1280.0f** in **ASampleCharacter.cpp**:
+
+```cpp
+SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
+SideViewCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
+SideViewCameraComponent->OrthoWidth = 1280.0f;
+SideViewCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
+```
+
 ### True sprite colors
 
 One common problem is to keep the colors of your sprites intact.
