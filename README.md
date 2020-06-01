@@ -5,10 +5,10 @@
 
 Sample of an interactable 2D chest done with Paper2D.
 
-![Preview](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/preview.gif)
-
 This project is an example of how to write an interactable chest in a Paper2D game, with the constraint of
 being fully replicated over network.
+
+![Preview](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/preview.gif)
 
 Features:
   * Pixel perfect sprites
