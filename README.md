@@ -108,7 +108,7 @@ the RPC is not called on server.
 
 ### Replicated interactable chest
 
-The potential interaction with our chest is detected in **ASampleInteractableActor** using these two functions:
+The potential interaction with our chest is detected in **ASampleInteractableActor** using these these two overlap functions:
 
 ```cpp
 void NotifyActorBeginOverlap(class AActor* Other) override;
