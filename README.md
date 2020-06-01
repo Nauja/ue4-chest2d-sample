@@ -34,7 +34,7 @@ by two:
 
 ![PixelsPerUnit](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/pixelperfect_sprite.png)
 
-The **OrthoWidth** parameter of the **SideViewCamera** is set to **1280.0f** in **ASampleCharacter.cpp**:
+In **ASampleCharacter.cpp**, we configure the **SideViewCameraComponent** with an **OrthoWidth** of **1280** pixels:
 
 ```cpp
 SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
