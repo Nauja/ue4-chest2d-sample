@@ -115,6 +115,24 @@ void NotifyActorBeginOverlap(class AActor* Other) override;
 void NotifyActorEndOverlap(class AActor* Other) override;
 ```
 
+It also has an **Interact** function that can either be implemented in C++ or Blueprint:
+
+```cpp
+UFUNCTION(BlueprintNativeEvent)
+void Interact(class AActor* Other);
+```
+
+When pressing the **Interact** button, it calls the **Interact** function on all interactable Actors overlapping our character:
+
+```cpp
+TSet<AActor*> Actors;
+GetOverlappingActors(Actors, TSubclassOf<ASampleInteractableActor>());
+for (auto Actor : Actors)
+{ 
+    static_cast<ASampleInteractableActor*>(Actor)->Interact(this);
+}
+```
+
 The visual state of our chest (closed or opened) is replicated by enabling the replication of **ASampleChestActor**'s components:
 
 ```cpp
