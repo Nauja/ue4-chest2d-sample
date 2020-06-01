@@ -19,7 +19,20 @@ Features:
 
 ### Pixel perfect sprites
 
-wip
+Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
+
+As an example, here is the charset used for Mario:
+
+![Mario](https://github.com/Nauja/ue4-chest2d-sample/raw/master/Content/Mario/Textures/T_Mario.png)
+
+You can see that the size of one frame is really small (16x32 pixels). If it were displayed as is
+in UE4, then all your physics would have to be configured with really small values and placing or moving
+actors in the editor would become complicated due to the small size of your actors.
+
+So, in this sample all sprites are configured with a **pixels per unit** of **0.5** that effectively make them scaled
+by two:
+
+![PixelsPerUnit](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/pixelperfect_sprite.png)
 
 ### True sprite colors
 
