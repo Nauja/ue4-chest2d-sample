@@ -11,7 +11,7 @@ This project is an example of how to write an interactable chest in a Paper2D ga
 being fully replicated over network.
 
 Features:
-  * Pixel perfect camera/sprites
+  * Pixel perfect sprites
   * True sprite colors
   * Custom **Interact** action (E)
   * RPC to replicate **Interact** action
