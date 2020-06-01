@@ -15,7 +15,7 @@ Features:
   * True sprite colors
   * Custom **Interact** action (E)
   * RPC to replicate **Interact** action
-  * C++ interactable chest
+  * Replicated interactable chest
 
 ### Pixel perfect sprites
 
@@ -106,6 +106,25 @@ Per consequence it would not be possible to move it directly into the class of o
 interactable Actor. Missing this point can give you a hard time trying to figure out why
 the RPC is not called on server.
 
-### Interactable chest
+### Replicated interactable chest
 
-wip
+The visual state of our chest (closed or opened) is replicated by enabling the replication of `ASampleChestActor`'s components:
+
+```cpp
+ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer)
+    : Super(ObjectInitializer)
+    , bIsOpened(false)
+    , ChestConfig(nullptr)
+{
+    ClosedComponent = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, ClosedSpriteComponentName);
+    ClosedComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    ClosedComponent->SetIsReplicated(true);
+    ClosedComponent->SetupAttachment(RootComponent);
+
+    OpenedComponent = ObjectInitializer.CreateDefaultSubobject<UPaperSpriteComponent>(this, OpenedSpriteComponentName);
+    OpenedComponent->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+    OpenedComponent->SetIsReplicated(true);
+    OpenedComponent->SetupAttachment(RootComponent);
+    bReplicates = true;
+}
+```
