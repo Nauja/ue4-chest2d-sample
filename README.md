@@ -27,7 +27,7 @@ As an example, here is the charset used for Mario:
 
 You can see that the size of one frame is really small (16x32 pixels). If it were displayed as is
 in UE4, then all your physics would have to be configured with really small values and placing or moving
-actors in the editor would become complicated due to their small size.
+Actors in the editor would become complicated due to their small size.
 
 So, in this sample all sprites are configured with a **pixels per unit** of **0.5** that effectively make them scaled
 by two:
@@ -58,13 +58,53 @@ Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
 
 Also, in **Project Settings > Engine > Rendering**, make sure to uncheck the **Mobile HDR** option and all post processing options such as **Bloom**, **Auto Exposure**, **Anti-Aliasing**, etc.
 
-### Custom Interact action
+### C++ RPC to replicate Interact action
 
-wip
+Pressing the **Interact** button client-size simply calls a RPC server-side to handle the action.
 
-### RPC to replicate Interact action
+Here is the definition in **ASampleCharacter.h**:
 
-wip
+```cpp
+UFUNCTION()
+void Interact();
+
+UFUNCTION(reliable, Server, WithValidation)
+void Server_Interact();
+```
+
+Here is the implementation in **ASampleCharacter.cpp**:
+
+```cpp
+void ASampleCharacter::Interact()
+{
+    if (GetLocalRole() < ROLE_Authority) {
+        Server_Interact();
+    }
+    else
+    {
+        TSet<AActor*> Actors;
+        GetOverlappingActors(Actors, TSubclassOf<ASampleInteractableActor>());
+        for (auto Actor : Actors)
+        { 
+            static_cast<ASampleInteractableActor*>(Actor)->Interact(this);
+        }
+    }
+}
+
+bool ASampleCharacter::Server_Interact_Validate()
+{
+    return true;
+}
+
+void ASampleCharacter::Server_Interact_Implementation()
+{
+    Interact();
+}
+```
+
+Please note this RPC has to be called from an Actor owned by the client for it to works.
+Per consequence it would not be possible to move it directly into the class of our
+interactable Actor.
 
 ### Interactable chest
 
