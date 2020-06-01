@@ -34,6 +34,8 @@ check(Controller);
 Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
 ```
 
+Also, in **Project Settings > Engine > Rendering**, make sure to uncheck the **Mobile HDR** option and all post processing options such as **Bloom**, **Auto Exposure**, **Anti-Aliasing**, etc.
+
 ### Custom Interact action
 
 wip
