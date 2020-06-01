@@ -125,11 +125,20 @@ void Interact(class AActor* Other);
 When pressing the **Interact** button, it calls the **Interact** function on all interactable Actors overlapping our character:
 
 ```cpp
-TSet<AActor*> Actors;
-GetOverlappingActors(Actors, TSubclassOf<ASampleInteractableActor>());
-for (auto Actor : Actors)
-{ 
-    static_cast<ASampleInteractableActor*>(Actor)->Interact(this);
+void ASampleCharacter::Interact()
+{
+    if (GetLocalRole() < ROLE_Authority) {
+        Server_Interact();
+    }
+    else
+    {
+        TSet<AActor*> Actors;
+        GetOverlappingActors(Actors, TSubclassOf<ASampleInteractableActor>());
+        for (auto Actor : Actors)
+        { 
+            static_cast<ASampleInteractableActor*>(Actor)->Interact(this);
+        }
+    }
 }
 ```
 
