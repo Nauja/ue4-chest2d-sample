@@ -29,12 +29,11 @@ As you can see, the size of one frame is really small (16x32 pixels). If it were
 in UE4, then all your physics would have to be configured with really small values and placing or moving
 Actors in the editor would become complicated due to their small size.
 
-So, all the sprites are configured with a **pixels per unit** of **0.5**, which effectively make them
-scaled by two:
+So, the first important point is to configure our sprites with a **pixels per unit** value of **0.5**, which effectively make them scaled by two:
 
 ![PixelsPerUnit](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/pixelperfect_sprite.png)
 
-Then, the **SideViewCameraComponent** is configured with an **OrthoWidth** of **1280** pixels in **ASampleCharacter.cpp**:
+Finally, the **SideViewCameraComponent** is configured with an **OrthoWidth** of **1280** pixels in **ASampleCharacter.cpp**:
 
 ```cpp
 SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
