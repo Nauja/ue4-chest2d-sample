@@ -18,8 +18,6 @@ Features:
 
 ### Pixel perfect sprites
 
-Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
-
 Here is the charset used for Mario:
 
 ![Mario](https://github.com/Nauja/ue4-chest2d-sample/raw/master/Content/Mario/Textures/T_Mario.png)
@@ -162,3 +160,7 @@ ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer
     bReplicates = true;
 }
 ```
+
+### Credits
+
+Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
