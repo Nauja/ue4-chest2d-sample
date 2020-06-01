@@ -143,7 +143,7 @@ void ASampleCharacter::Interact()
 }
 ```
 
-The visual state of our chest (closed or opened) is replicated by enabling the replication of **ASampleChestActor**'s components:
+This **Interact** function is overriden by **ASampleChestActor** to perform the gameplay interaction and swap the displayed sprite. The visual state of our chest (closed or opened) is replicated by enabling the replication of **ASampleChestActor**'s components:
 
 ```cpp
 ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer)
