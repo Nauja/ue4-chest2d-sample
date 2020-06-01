@@ -43,7 +43,7 @@ SideViewCameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::Socket
 
 ### True sprite colors
 
-One common problem is to keep the colors of your sprites intact.
+One common problem is that the colors of rendered sprites are altered by UE4's post processing effects.
 By default, many post processing effects are enabled and are causing sprites
 not to be rendered correctly. In this sample, all post processing effects are disabled
 with this single command:
