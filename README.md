@@ -13,7 +13,6 @@ being fully replicated over network.
 Features:
   * Pixel perfect sprites
   * True sprite colors
-  * Custom **Interact** action (E)
   * RPC to replicate **Interact** action
   * Replicated interactable chest
 
