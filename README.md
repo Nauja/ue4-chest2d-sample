@@ -10,6 +10,9 @@ Sample of an interactable 2D chest done with Paper2D.
 This project is an example of how to write an interactable chest in a Paper2D game, with the constraint of
 being fully replicated over network.
 
+Prerequisites:
+  * [Pixel Perfect 2D Sample](https://github.com/Nauja/ue4-pixelperfect2d-sample)
+
 Features:
   * RPC to replicate **Interact** action
   * Replicated interactable chest
