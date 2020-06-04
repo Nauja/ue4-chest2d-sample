@@ -101,7 +101,7 @@ UFUNCTION(BlueprintNativeEvent, Category = "Sample")
 void NotifyEndInteractable();
 ```
 
-Note that the custom **NotifyBeginInteractable** and **NotifyEndInteractable** are used to react to the
+Note that the custom **NotifyBeginInteractable** and **NotifyEndInteractable** functions are used to react to the
 overlap directly from C++, while **OnBeginInteractable** and **OnEndInteractable** are used to react
 from Blueprint.
 
