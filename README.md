@@ -15,11 +15,15 @@ Prerequisites:
 
 Features:
   * RPC to replicate **Interact** action
-  * Replicated interactable chest
+  * Detect possible interaction on server and client
+  * Replicate the state of our chest
 
 ### RPC to replicate Interact action
 
 Pressing the **Interact** button client-side simply calls an RPC server-side to handle the action.
+In a multiplayer game, the client may be totally desynchronized and may not see the correct state
+of the game. This step is necessary to let the server validate whether or not the client can interact
+with something and to let the server perform the action.
 
 Here is the definition in **ASampleCharacter.h**:
 
@@ -70,8 +74,11 @@ the RPC is not called on server.
 
 To visually show when the player can use the **Interact** action, we have to detect
 when the character is overlapping the chest. To do this, simply use the two **NotifyActorBeginOverlap**
-and **NotifyActorEndOverlap** to detect and track overlaps with Actors. Here is the definition in
-**SampleInteractableActor.h**:
+and **NotifyActorEndOverlap** to detect and track overlaps with Actors.
+This step is necessary to let the client compute itself whether or not it can interact
+with something and give and feedback to the player.
+
+Here is the definition in **SampleInteractableActor.h**:
 
 ```cpp
 void NotifyActorBeginOverlap(class AActor* Other) override;
@@ -148,44 +155,71 @@ They are bound to the chest from Blueprint using **OnBeginInteractable** and **O
 
 ![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/editor-interactbutton.png)
 
-### Replicated interactable chest
+### Replicate the state of our chest
 
-The potential interaction with our chest is detected in **ASampleInteractableActor** by using the **NotifyActorBeginOverlap** and **NotifyActorEndOverlap** functions. This requires to have a collision component configured to trigger overlap events with
-the character:
+In this sample, we use a boolean **bIsEnabled** to tell whether the chest can be interacted with or not.
+Once someone interacted with the chest, this boolean becomes **false** and is later resetted to **true** to make
+the interaction available once again. This step is necessary to synchronized the client with the server.
+
+Here is the definition in **SampleInteractableActor.h**:
 
 ```cpp
-void NotifyActorBeginOverlap(class AActor* Other) override;
-void NotifyActorEndOverlap(class AActor* Other) override;
+/** [Server] Set if the interaction is enabled or not */
+UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Sample")
+void SetIsEnabled(bool State);
+ 
+/** [Client] Called when bIsEnabled get replicated */
+UFUNCTION()
+virtual void OnRep_IsEnabled();
+
+/** Indicate if the interaction is enabled **/
+UPROPERTY(replicated, ReplicatedUsing = OnRep_IsEnabled)
+bool bIsEnabled;
 ```
 
-It also has an **Interact** function that can either be implemented in C++ or Blueprint:
+And the implementation in **SampleInteractableActor.cpp**:
 
 ```cpp
-UFUNCTION(BlueprintNativeEvent)
-void Interact(class AActor* Other);
-```
-
-When pressing the **Interact** button, the **Interact** function is called on all interactable Actors overlapping our character:
-
-```cpp
-void ASampleCharacter::Interact()
+void ASampleInteractableActor::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
-    if (GetLocalRole() < ROLE_Authority) {
-        Server_Interact();
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(ASampleInteractableActor, bIsEnabled);
+}
+
+void ASampleInteractableActor::SetIsEnabled_Implementation(bool State)
+{
+    bIsEnabled = State;
+
+    // If re-enabled, check currently overlapping actors
+    if (bIsEnabled)
+    {
+        OverlappingActors.Empty();
+        GetOverlappingActors(OverlappingActors, TSubclassOf<ASampleCharacter>());
+        if (OverlappingActors.Num() == 0)
+        {
+            NotifyEndInteractable();
+        }
+        else
+        {
+            NotifyBeginInteractable();
+        }
     }
     else
     {
-        TSet<AActor*> Actors;
-        GetOverlappingActors(Actors, TSubclassOf<ASampleInteractableActor>());
-        for (auto Actor : Actors)
-        { 
-            static_cast<ASampleInteractableActor*>(Actor)->Interact(this);
-        }
+        NotifyEndInteractable();
     }
+}
+
+void ASampleInteractableActor::OnRep_IsEnabled()
+{
+    SetIsEnabled(bIsEnabled);
 }
 ```
 
-This **Interact** function is overriden by **ASampleChestActor** to perform the gameplay interaction and swap the displayed sprite. The visual state of our chest (closed or opened) is replicated by enabling the replication of **ASampleChestActor**'s components:
+The key is to use the **ReplicatedUsing** attribute to call a function when **bIsEnabled** get replicated.
+When the function is called, we simply detect overlapping Actors again.
+
+Now to also replicate the visual state of our chest (closed or opened), we mark its components as replicated:
 
 ```cpp
 ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer)
@@ -209,3 +243,5 @@ ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer
 ### Credits
 
 Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
+
+Font from [FontSpace](https://www.fontspace.com/atlantis-international-font-f31357).
