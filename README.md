@@ -140,6 +140,14 @@ void ASampleInteractableActor::NotifyEndInteractable_Implementation()
 }
 ```
 
+In this sample you can see two buttons indicating when you can interact with the chest:
+
+![LevelInteractButtons](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/editor-levelinteractbutton.png)
+
+They are bound to the chest from Blueprint using **OnBeginInteractable** and **OnEndInteractable** delegates:
+
+![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/editor-interactbutton.png)
+
 ### Replicated interactable chest
 
 The potential interaction with our chest is detected in **ASampleInteractableActor** by using the **NotifyActorBeginOverlap** and **NotifyActorEndOverlap** functions. This requires to have a collision component configured to trigger overlap events with
