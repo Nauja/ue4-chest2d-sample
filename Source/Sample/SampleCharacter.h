@@ -21,6 +21,10 @@ class ASampleCharacter : public APaperCharacter
 {
 	GENERATED_BODY()
 
+	/** Side view camera */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera, meta=(AllowPrivateAccess="true"))
+	class UCameraComponent* SideViewCameraComponent;
+
 	UTextRenderComponent* TextComponent;
 	virtual void Tick(float DeltaSeconds) override;
 protected:
@@ -60,4 +64,7 @@ protected:
 
 public:
 	ASampleCharacter();
+
+	/** Returns SideViewCameraComponent subobject **/
+	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 };

@@ -27,16 +27,27 @@ ASampleCharacter::ASampleCharacter()
 	GetCapsuleComponent()->SetCapsuleHalfHeight(28.0f);
 	GetCapsuleComponent()->SetCapsuleRadius(16.0f);
 
-	// Prevent all automatic rotation behavior on the camera, character, and camera component
-	GetCharacterMovement()->bOrientRotationToMovement = false;
+	// Create an orthographic camera (no perspective) and attach it to the boom
+	SideViewCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("SideViewCamera"));
+	SideViewCameraComponent->ProjectionMode = ECameraProjectionMode::Orthographic;
+	SideViewCameraComponent->OrthoWidth = 512.0f;
+	SideViewCameraComponent->AspectRatio = 8.0f / 7.0f;
+	SideViewCameraComponent->SetupAttachment(RootComponent);
+
+	// Make the camera static and center on screen
+	SideViewCameraComponent->SetAbsolute(true, true);
+	SideViewCameraComponent->SetWorldLocationAndRotation(
+		FVector(256.0f, 1000.0f, -224.0f),
+		FQuat::MakeFromEuler(FVector(0.0f, 0.0f, -90.0f))
+	);
 
 	// Configure character movement
-	GetCharacterMovement()->GravityScale = 1.0f;
-	GetCharacterMovement()->AirControl = 0.6f;
-	GetCharacterMovement()->JumpZVelocity = 562.0f;
-	GetCharacterMovement()->GroundFriction = 2.0f;
-	GetCharacterMovement()->MaxWalkSpeed = 450.0f;
-	GetCharacterMovement()->MaxFlySpeed = 300.0f;
+	GetCharacterMovement()->GravityScale = 2.0f;
+	GetCharacterMovement()->AirControl = 0.80f;
+	GetCharacterMovement()->JumpZVelocity = 800.f;
+	GetCharacterMovement()->GroundFriction = 3.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 225.0f;
+	GetCharacterMovement()->MaxFlySpeed = 600.0f;
 
 	// Lock character motion onto the XZ plane, so the character can't move in or out of the screen
 	GetCharacterMovement()->bConstrainToPlane = true;
