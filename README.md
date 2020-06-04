@@ -66,6 +66,80 @@ Per consequence it would not be possible to move it directly into the class of o
 interactable Actor. Missing this point can give you a hard time trying to figure out why
 the RPC is not called on server.
 
+### Detect possible interaction on server and client
+
+To visually show when the player can use the **Interact** action, we have to detect
+when the character is overlapping the chest. To do this, simply use the two **NotifyActorBeginOverlap**
+and **NotifyActorEndOverlap** to detect and track overlaps with Actors. Here is the definition in
+**SampleInteractableActor.h**:
+
+```cpp
+void NotifyActorBeginOverlap(class AActor* Other) override;
+void NotifyActorEndOverlap(class AActor* Other) override;
+
+/** Called when at least one actor can interact with this interactable **/
+UPROPERTY(BlueprintAssignable, Category="Sample")
+FOnBeginInteractableDelegate OnBeginInteractable;
+
+/** Called when no more actors can interact with this interactable **/
+UPROPERTY(BlueprintAssignable, Category="Sample")
+FOnEndInteractableDelegate OnEndInteractable;
+
+/** Called when at least one actor can interact with this interactable **/
+UFUNCTION(BlueprintNativeEvent, Category = "Sample")
+void NotifyBeginInteractable();
+
+/** Called when no more actors can interact with this interactable **/
+UFUNCTION(BlueprintNativeEvent, Category = "Sample")
+void NotifyEndInteractable();
+```
+
+Note that the custom **NotifyBeginInteractable** and **NotifyEndInteractable** are used to react to the
+overlap directly from C++, while **OnBeginInteractable** and **OnEndInteractable** are used to react
+from Blueprint.
+
+Here is the implementation in **SampleInteractableActor.cpp**:
+
+```cpp
+void ASampleInteractableActor::NotifyActorBeginOverlap(class AActor* Other)
+{
+    Super::NotifyActorBeginOverlap(Other);
+
+    if (IsValid(Other) && !IsPendingKill() && bIsEnabled)
+    {
+        if (OverlappingActors.Num() == 0)
+        {
+            NotifyBeginInteractable();
+        }
+        OverlappingActors.Add(Other);
+    }
+}
+
+void ASampleInteractableActor::NotifyActorEndOverlap(class AActor* Other)
+{
+    Super::NotifyActorEndOverlap(Other);
+
+    if (IsValid(Other) && !IsPendingKill() && bIsEnabled)
+    {
+        OverlappingActors.Remove(Other);
+        if (OverlappingActors.Num() == 0)
+        {
+            NotifyEndInteractable();
+        }
+    }
+}
+
+void ASampleInteractableActor::NotifyBeginInteractable_Implementation()
+{
+    OnBeginInteractable.Broadcast();
+}
+
+void ASampleInteractableActor::NotifyEndInteractable_Implementation()
+{
+   OnEndInteractable.Broadcast();
+}
+```
+
 ### Replicated interactable chest
 
 The potential interaction with our chest is detected in **ASampleInteractableActor** by using the **NotifyActorBeginOverlap** and **NotifyActorEndOverlap** functions. This requires to have a collision component configured to trigger overlap events with
