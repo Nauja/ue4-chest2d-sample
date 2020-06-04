@@ -159,7 +159,7 @@ They are bound to the chest from Blueprint using **OnBeginInteractable** and **O
 
 In this sample, we use a boolean **bIsEnabled** to tell whether the chest can be interacted with or not.
 Once someone interacted with the chest, this boolean becomes **false** and is later resetted to **true** to make
-the interaction available once again. This step is necessary to synchronized the client with the server.
+the interaction available once again. This step is necessary to synchronize the client with the server.
 
 Here is the definition in **SampleInteractableActor.h**:
 
