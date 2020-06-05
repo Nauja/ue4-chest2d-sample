@@ -64,3 +64,5 @@ DerivedDataCache/*
 StarterContent/
 Package/
 DefaultEditorPerProjectUserSettings.ini
+Content/Collections/
+Content/Developers/
