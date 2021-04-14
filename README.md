@@ -5,7 +5,7 @@
 
 Sample of an interactable 2D chest done with Paper2D.
 
-![Preview](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/preview.gif)
+![Preview](https://github.com/Nauja/ue4-chest2d-sample/raw/media/preview.gif)
 
 This project is an example of how to write an interactable chest in a Paper2D game, with the constraint of
 being fully replicated over network.
@@ -149,11 +149,11 @@ void ASampleInteractableActor::NotifyEndInteractable_Implementation()
 
 In this sample you can see two buttons indicating when you can interact with the chest:
 
-![LevelInteractButtons](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/editor-levelinteractbutton.png)
+![LevelInteractButtons](https://github.com/Nauja/ue4-chest2d-sample/raw/media/editor-levelinteractbutton.png)
 
 They are bound to the chest from Blueprint using **OnBeginInteractable** and **OnEndInteractable** delegates:
 
-![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/master/docs/editor-interactbutton.png)
+![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/media/editor-interactbutton.png)
 
 ### Replicate the state of our chest
 
