@@ -245,3 +245,7 @@ ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer
 Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
 
 Font from [FontSpace](https://www.fontspace.com/atlantis-international-font-f31357).
+
+## License
+
+Licensed under the [MIT](LICENSE) License.
