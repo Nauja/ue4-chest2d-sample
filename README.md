@@ -13,12 +13,13 @@ being fully replicated over network.
 Prerequisites:
   * [Pixel Perfect 2D Sample](https://github.com/Nauja/ue4-pixelperfect2d-sample)
 
-Features:
-  * RPC to replicate **Interact** action
-  * Detect possible interaction on server and client
-  * Replicate the state of our chest
+## Table of contents:
 
-### RPC to replicate Interact action
+- [RPC to replicate **Interact** action](#rpc-to-replicate-Interact-action)
+- [Detect possible interaction on server and client](#detect-possible-interaction-on-server-and-client)
+- [Replicate the state of our chest](#replicate-the-state-of-our-chest)
+
+## RPC to replicate Interact action
 
 Pressing the **Interact** button client-side simply calls an RPC server-side to handle the action.
 In a multiplayer game, the client may be totally desynchronized and may not see the correct state
@@ -70,7 +71,7 @@ Per consequence it would not be possible to move it directly into the class of o
 interactable Actor. Missing this point can give you a hard time trying to figure out why
 the RPC is not called on server.
 
-### Detect possible interaction on server and client
+## Detect possible interaction on server and client
 
 To visually show when the player can use the **Interact** action, we have to detect
 when the character is overlapping the chest. To do this, simply use the two **NotifyActorBeginOverlap**
@@ -155,7 +156,7 @@ They are bound to the chest from Blueprint using **OnBeginInteractable** and **O
 
 ![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/media/editor-interactbutton.png)
 
-### Replicate the state of our chest
+## Replicate the state of our chest
 
 In this sample, we use a boolean **bIsEnabled** to tell whether the chest can be interacted with or not.
 Once someone interacted with the chest, this boolean becomes **false** and is later resetted to **true** to make
@@ -240,7 +241,7 @@ ASampleChestActor::ASampleChestActor(const FObjectInitializer& ObjectInitializer
 }
 ```
 
-### Credits
+## Credits
 
 Sprites are coming from [The Spriters Resource](https://www.spriters-resource.com/).
 
