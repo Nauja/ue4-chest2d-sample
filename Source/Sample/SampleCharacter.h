@@ -65,6 +65,8 @@ protected:
 public:
 	ASampleCharacter();
 
+	virtual void BeginPlay() override;
+
 	/** Returns SideViewCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetSideViewCameraComponent() const { return SideViewCameraComponent; }
 };
