@@ -13,6 +13,8 @@ being fully replicated over network.
 Prerequisites:
   * [Pixel Perfect 2D Sample](https://github.com/Nauja/ue4-pixelperfect2d-sample)
 
+For an Unreal Engine 5 version, check the branch [ue5.2](https://github.com/Nauja/ue4-chest2d-sample/tree/ue5.2).
+
 ## Table of contents:
 
 - [RPC to replicate **Interact** action](#rpc-to-replicate-Interact-action)
@@ -150,11 +152,11 @@ void ASampleInteractableActor::NotifyEndInteractable_Implementation()
 
 In this sample you can see two buttons indicating when you can interact with the chest:
 
-![LevelInteractButtons](https://github.com/Nauja/ue4-chest2d-sample/raw/media/editor-levelinteractbutton.png)
+![LevelInteractButtons](https://github.com/Nauja/ue4-chest2d-sample/raw/media4.25/editor-levelinteractbutton.png)
 
 They are bound to the chest from Blueprint using **OnBeginInteractable** and **OnEndInteractable** delegates:
 
-![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/media/editor-interactbutton.png)
+![InteractButtonsBP](https://github.com/Nauja/ue4-chest2d-sample/raw/media4.25/editor-interactbutton.png)
 
 ## Replicate the state of our chest
 
