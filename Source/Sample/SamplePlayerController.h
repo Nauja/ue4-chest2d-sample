@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Epic Games, Inc. All Rights Reserved.
 
 #pragma once
 
@@ -10,9 +10,10 @@
  * The purpose of this class is to execute the command showflag.postprocessing 0
  * when the player spawns.
  */
-UCLASS()
-class SAMPLE_API ASamplePlayerController : public APlayerController
+UCLASS(config = Game)
+class ASamplePlayerController : public APlayerController
 {
+public:
 	GENERATED_BODY()
 
 	virtual void BeginPlay() override;
