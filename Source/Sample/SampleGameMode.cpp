@@ -2,20 +2,12 @@
 
 #include "SampleGameMode.h"
 #include "SampleCharacter.h"
+#include "SamplePlayerController.h"
 #include "Kismet/GameplayStatics.h"
 
 ASampleGameMode::ASampleGameMode()
 {
 	// Set default pawn class to our character
-	DefaultPawnClass = ASampleCharacter::StaticClass();	
-}
-
-void ASampleGameMode::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// Allow to keep the true colors of sprites
-	APlayerController* Controller = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	check(Controller);
-	Controller->ConsoleCommand(TEXT("showflag.postprocessing 0"));
+	DefaultPawnClass = ASampleCharacter::StaticClass();
+	PlayerControllerClass = ASamplePlayerController::StaticClass();
 }
